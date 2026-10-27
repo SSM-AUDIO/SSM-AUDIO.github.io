@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSM-Audio: plug-ins</title>
+<meta name="description" content="SSM-Audio plug-ins for mixing and drum production: Best Trigger 3, Best Align 3, Best Limiter 3 (VST3, Windows and macOS).">
+<style>
+  :root { color-scheme: light dark; --bg:#f8f7f4; --ink:#1b2233; --muted:#5d6572; --pill:#b9cdea; --pill-hover:#a3bde3; --pill-ink:#1b2233; --link:#2c6a8e; --line:#e0ddd5; --card:#ffffff; --logo-filter:invert(.85); --soon:#8a93a3; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14161a; --ink:#e9ebf0; --muted:#a0a6b2; --pill:#3a4a6b; --pill-hover:#4a5d85; --pill-ink:#f2f4f8; --link:#8cc2e6; --line:#2c3038; --card:#1b1e24; --logo-filter:none; --soon:#7d8697; } }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.55 "Segoe UI", system-ui, Arial, sans-serif; }
+  a { color:var(--link); text-decoration:none; } a:hover { text-decoration:underline; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 28px; }
+
+  header { position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  header .wrap { display:flex; align-items:center; gap:28px; height:68px; }
+  .brand { display:flex; align-items:center; gap:12px; color:var(--ink); font-size:24px; font-weight:600; letter-spacing:.4px; white-space:nowrap; }
+  .brand:hover { text-decoration:none; }
+  .brand img { height:38px; filter:var(--logo-filter); }
+  nav { display:flex; gap:26px; margin-left:12px; }
+  nav a { color:var(--ink); font-size:17px; padding:6px 0; border-bottom:2px solid transparent; }
+  nav a:hover { text-decoration:none; border-color:var(--pill); }
+  .sp { flex:1; }
+  .lang { display:flex; border:1px solid var(--line); border-radius:99px; overflow:hidden; }
+  .lang button { background:transparent; color:var(--muted); border:0; padding:6px 14px; font:inherit; font-size:14px; cursor:pointer; }
+  .lang button.on { background:var(--pill); color:var(--pill-ink); font-weight:600; }
+
+  .hero { padding:64px 0 22px; }
+  .hero h1 { font-size:46px; line-height:1.1; margin:0 0 12px; font-weight:600; }
+  .hero p { font-size:21px; color:var(--muted); margin:0; max-width:680px; }
+
+  h2.sec { font-size:30px; margin:64px 0 22px; font-weight:600; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:22px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:26px 26px 24px; display:flex; flex-direction:column; gap:12px; }
+  .card h3 { margin:0; font-size:26px; font-weight:600; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .card p { margin:0; color:var(--muted); }
+  .card .shot { border-radius:10px; width:100%; height:auto; display:block; box-shadow:0 6px 22px rgba(0,0,0,.16); }
+  .badge { font-size:12px; font-weight:600; letter-spacing:.5px; text-transform:uppercase; padding:3px 10px; border-radius:99px; background:var(--pill); color:var(--pill-ink); }
+  .badge.soon { background:transparent; color:var(--soon); border:1px solid var(--line); }
+  .card .links { margin-top:auto; padding-top:6px; display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; background:var(--pill); color:var(--pill-ink); font-weight:600; padding:9px 22px; border-radius:99px; }
+  .btn:hover { background:var(--pill-hover); text-decoration:none; }
+  .btn.ghost { background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn.ghost:hover { background:var(--card); }
+  .btn.off { opacity:.45; pointer-events:none; }
+
+  /* the downloads: one row per plug-in, like a list of installers */
+  .dl { border-top:1px solid var(--line); }
+  .row { display:grid; grid-template-columns:200px minmax(0,1fr) 190px; gap:30px; padding:34px 0; border-bottom:1px solid var(--line); align-items:start; }
+  .row h3 { margin:0; font-size:26px; font-weight:600; }
+  .row .tabs { display:flex; border-bottom:2px solid var(--line); margin-bottom:18px; max-width:420px; }
+  .row .tabs button { flex:1; background:transparent; border:0; border-bottom:3px solid transparent; margin-bottom:-2px; color:var(--muted); font:inherit; font-size:16px; padding:8px 4px; cursor:pointer; }
+  .row .tabs button.on { color:var(--ink); border-color:var(--pill-hover); font-weight:600; }
+  .pill { display:inline-flex; align-items:center; gap:12px; background:var(--pill); color:var(--pill-ink); font-weight:600; font-size:18px; padding:9px 24px 9px 12px; border-radius:99px; }
+  .pill:hover { background:var(--pill-hover); text-decoration:none; }
+  .pill .ic { width:30px; height:30px; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .pill svg { width:16px; height:16px; fill:none; stroke:var(--pill-ink); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .pill small { font-weight:400; font-size:13px; opacity:.8; }
+  .pill.off { opacity:.45; pointer-events:none; }
+  .req { color:var(--muted); font-size:15px; margin:12px 0 0; }
+  .res h4 { margin:0 0 6px; font-size:15px; color:var(--muted); font-weight:600; letter-spacing:.3px; }
+  .res a { display:block; padding:1px 0; font-size:16px; }
+  .soonrow .pill { background:transparent; border:1px dashed var(--line); color:var(--soon); }
+
+  footer { margin-top:80px; border-top:1px solid var(--line); padding:30px 0 50px; color:var(--muted); font-size:14px; }
+  footer .wrap { display:flex; gap:22px; flex-wrap:wrap; align-items:center; }
+  footer .sp { flex:1; min-width:20px; }
+  [data-lang="ru"] { display:none; } body.ru [data-lang="en"] { display:none; } body.ru [data-lang="ru"] { display:revert; }
+
+  @media (max-width:860px) {
+    .row { grid-template-columns:1fr; gap:16px; padding:26px 0; }
+    .hero h1 { font-size:36px; } .hero p { font-size:19px; }
+    nav { display:none; }
+    header .wrap { gap:14px; } .brand { font-size:20px; gap:10px; } .brand img { height:32px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="images/ssm-logo.png" alt="">SSM-Audio</a>
+    <nav>
+      <a href="#plugins"><span data-lang="en">plug-ins</span><span data-lang="ru">плагины</span></a>
+      <a href="#downloads"><span data-lang="en">downloads</span><span data-lang="ru">скачать</span></a>
+      <a href="https://t.me/ssm_metalmix"><span data-lang="en">support</span><span data-lang="ru">поддержка</span></a>
+      <a href="https://www.youtube.com/@SSM-AUDIO"><span data-lang="en">video lessons</span><span data-lang="ru">видеоуроки</span></a>
+    </nav>
+    <span class="sp"></span>
+    <div class="lang" role="group" aria-label="Language"><button id="b-en" class="on" type="button">EN</button><button id="b-ru" type="button">RU</button></div>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero">
+    <h1><span data-lang="en">Plug-ins for mixing and drum production</span><span data-lang="ru">Плагины для сведения и барабанов</span></h1>
+    <p><span data-lang="en">VST3 plug-ins for Windows and macOS. Every plug-in comes with a fully featured 14-day trial.</span><span data-lang="ru">Плагины VST3 для Windows и macOS. У каждого плагина есть полнофункциональный пробный период 14 дней.</span></p>
+  </section>
+
+  <h2 class="sec" id="plugins"><span data-lang="en">Plug-ins</span><span data-lang="ru">Плагины</span></h2>
+  <div class="grid" id="cards"></div>
+
+  <h2 class="sec" id="downloads"><span data-lang="en">Downloads</span><span data-lang="ru">Скачать</span></h2>
+  <div class="dl" id="rows"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 SSM-Audio. All rights reserved.</span>
+    <a href="https://t.me/ssm_metalmix">Telegram</a>
+    <a href="https://www.youtube.com/@SSM-AUDIO">YouTube</a>
+    <span class="sp"></span>
+    <span>VST is a trademark of Steinberg Media Technologies GmbH.</span>
+  </div>
+</footer>
+
+<script>
+// ---- the plug-ins: add a block here and the page shows it (cards and downloads). status: 'out' = released, 'soon' = coming soon.
+var SITE = 'https://ssm-audio.github.io/';
+var PLUGINS = [
+  {
+    id: 'bt3', name: 'Best Trigger 3', status: 'out',
+    tag: { en: 'Drum trigger: sets itself up, saves time', ru: 'Барабанный триггер, который настраивается сам' },
+    text: { en: 'Finds every hit on a recorded drum track and plays your samples on it. Full Auto sets the threshold, the phase and the balance for you.',
+            ru: 'Находит каждый удар на записанной дорожке и играет на нём ваши сэмплы. Full Auto сам подбирает порог, фазу и баланс.' },
+    shot: 'images/best-trigger-3.png',
+    base: SITE + 'Best-Trigger-3/',
+    page: 'Best-Trigger-3/download.html', buy: 'Best-Trigger-3/payment.html', manualEn: 'Best-Trigger-3/manual-en.html', manualRu: 'Best-Trigger-3/manual-ru.html',
+    changelog: 'https://github.com/SSM-AUDIO/Best-Trigger-3/blob/main/CHANGELOG.md', macGuide: 'Best-Trigger-3/install-macos.html',
+    latest: 'Best-Trigger-3/latest.json',
+    win: function (v) { return 'https://github.com/SSM-AUDIO/Best-Trigger-3/releases/download/v' + v + '/BestTrigger3-' + v + '-Setup.exe'; },
+    mac: function (v) { return 'https://github.com/SSM-AUDIO/Best-Trigger-3/releases/download/v' + v + '/BestTrigger3-' + v + '-macOS.pkg'; },
+    reqWin: { en: 'Windows 10 / 11 (64-bit), VST3', ru: 'Windows 10 / 11 (64 бита), VST3' },
+    reqMac: { en: 'macOS 10.15 or newer (Apple chips and Intel), VST3', ru: 'macOS 10.15 и новее (чипы Apple и Intel), VST3' }
+  },
+  {
+    id: 'ba3', name: 'Best Align 3', status: 'soon',
+    tag: { en: 'Phase alignment of drum microphones', ru: 'Выравнивание фазы микрофонов барабанов' },
+    text: { en: 'Put it on every microphone track of a live drum kit: it shows how the microphones add up and lines them up in time and polarity.',
+            ru: 'Ставится на каждую дорожку микрофона живых барабанов: показывает, как микрофоны складываются, и выравнивает их по времени и полярности.' }
+  },
+  {
+    id: 'bl3', name: 'Best Limiter 3', status: 'soon',
+    tag: { en: 'Saturator, clipper and limiter in one', ru: 'Сатуратор, клиппер и лимитер в одном' },
+    text: { en: 'Three loudness tools in one plug-in, built for fast and loud mixes.',
+            ru: 'Три инструмента громкости в одном плагине, для быстрых и громких миксов.' }
+  }
+];
+
+var lang = (localStorage.getItem('ssm-lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'));
+var isMac = /Mac/i.test(navigator.platform || navigator.userAgent) && !/iPhone|iPad/i.test(navigator.userAgent);
+var versions = {};
+var picked = {};
+
+function T(o) { return o[lang] || o.en; }
+function abs(p) { return /^https?:/.test(p) ? p : p; }
+var ICON = '<span class="ic"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14"/></svg></span>';
+
+function renderCards() {
+  var h = '';
+  PLUGINS.forEach(function (p) {
+    var out = p.status === 'out';
+    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out ? '' : ' soon') + '">' + (out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span></h3>';
+    h += '<strong style="font-weight:600">' + T(p.tag) + '</strong>';
+    if (p.shot) h += '<img class="shot" src="' + p.shot + '" alt="' + p.name + '">';
+    h += '<p>' + T(p.text) + '</p>';
+    h += '<div class="links">';
+    if (out) {
+      h += '<a class="btn" href="#dl-' + p.id + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
+      h += '<a class="btn ghost" href="' + p.buy + '">' + (lang === 'ru' ? 'Купить' : 'Buy') + '</a>';
+      h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
+    } else {
+      h += '<span class="btn ghost off">' + (lang === 'ru' ? 'Скоро' : 'Coming soon') + '</span>';
+    }
+    h += '</div></article>';
+  });
+  document.getElementById('cards').innerHTML = h;
+}
+
+function renderRows() {
+  var h = '';
+  PLUGINS.forEach(function (p) {
+    var out = p.status === 'out';
+    var os = picked[p.id] || (isMac ? 'mac' : 'win');
+    h += '<div class="row' + (out ? '' : ' soonrow') + '" id="dl-' + p.id + '"><h3>' + p.name + '</h3><div>';
+    if (out) {
+      var v = versions[p.id];
+      var url = v ? (os === 'mac' ? p.mac(v) : p.win(v)) : p.page;
+      h += '<div class="tabs"><button type="button" data-p="' + p.id + '" data-os="mac" class="' + (os === 'mac' ? 'on' : '') + '">macOS</button>' +
+           '<button type="button" data-p="' + p.id + '" data-os="win" class="' + (os === 'win' ? 'on' : '') + '">Windows</button></div>';
+      h += '<a class="pill" href="' + url + '">' + ICON + (lang === 'ru' ? 'скачать ' : 'download ') + p.name + (v ? ' <small>v' + v + '</small>' : '') + '</a>';
+      h += '<p class="req">' + T(os === 'mac' ? p.reqMac : p.reqWin) + '</p>';
+      if (os === 'mac') h += '<p class="req"><a href="' + p.macGuide + '">' + (lang === 'ru' ? 'Как открыть установщик на macOS' : 'How to open the installer on a Mac') + '</a></p>';
+      h += '<p class="req">' + (lang === 'ru' ? 'Пробный период 14 дней, все функции открыты. Установщик: <a href="' + p.page + '">страница скачивания</a>.' : '14-day trial, all functions open. Installers: <a href="' + p.page + '">download page</a>.') + '</p>';
+    } else {
+      h += '<span class="pill off">' + (lang === 'ru' ? 'скоро' : 'coming soon') + '</span><p class="req">' + T(p.tag) + '</p>';
+    }
+    h += '</div><div class="res">';
+    if (out) {
+      h += '<h4>' + (lang === 'ru' ? 'Материалы' : 'Resources') + '</h4>';
+      h += '<a href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'руководство' : 'manual') + '</a>';
+      h += '<a href="' + p.changelog + '">' + (lang === 'ru' ? 'история изменений' : 'change log') + '</a>';
+      h += '<a href="' + p.buy + '">' + (lang === 'ru' ? 'купить ключ' : 'buy a licence') + '</a>';
+    }
+    h += '</div></div>';
+  });
+  document.getElementById('rows').innerHTML = h;
+}
+
+function render() {
+  document.body.className = lang === 'ru' ? 'ru' : '';
+  document.documentElement.lang = lang;
+  document.getElementById('b-en').className = lang === 'en' ? 'on' : '';
+  document.getElementById('b-ru').className = lang === 'ru' ? 'on' : '';
+  renderCards();
+  renderRows();
+}
+
+document.getElementById('b-en').onclick = function () { lang = 'en'; try { localStorage.setItem('ssm-lang', lang); } catch (e) {} render(); };
+document.getElementById('b-ru').onclick = function () { lang = 'ru'; try { localStorage.setItem('ssm-lang', lang); } catch (e) {} render(); };
+document.getElementById('rows').addEventListener('click', function (e) {
+  var b = e.target.closest('button[data-os]');
+  if (!b) return;
+  picked[b.getAttribute('data-p')] = b.getAttribute('data-os');
+  renderRows();
+});
+
+render();
+// the newest version of every released plug-in: from its own latest.json (the same file that the plug-in reads to say "a new version is available")
+PLUGINS.forEach(function (p) {
+  if (p.status !== 'out' || !p.latest) return;
+  fetch(p.latest, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
+    if (j && /^\d+\.\d+\.\d+$/.test(j.version)) { versions[p.id] = j.version; renderRows(); }
+  }).catch(function () { /* without it the button opens the download page */ });
+});
+</script>
+</body>
+</html>
