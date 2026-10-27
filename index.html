@@ -84,7 +84,6 @@
     <a class="brand" href="#top"><img src="images/ssm-logo.png" alt="">SSM-Audio</a>
     <nav>
       <a href="#plugins"><span data-lang="en">plug-ins</span><span data-lang="ru">плагины</span></a>
-      <a href="#downloads"><span data-lang="en">downloads</span><span data-lang="ru">скачать</span></a>
       <a href="https://t.me/ssm_metalmix"><span data-lang="en">support</span><span data-lang="ru">поддержка</span></a>
       <a href="https://www.youtube.com/@SSM-AUDIO"><span data-lang="en">video lessons</span><span data-lang="ru">видеоуроки</span></a>
     </nav>
@@ -93,7 +92,7 @@
   </div>
 </header>
 
-<main class="wrap" id="top">
+<main class="wrap" id="top"><a id="plugins"></a>
   <section class="hero">
     <h1><span data-lang="en">Plug-ins for mixing and drum production</span><span data-lang="ru">Плагины для сведения и барабанов</span></h1>
     <p><span data-lang="en">VST3 plug-ins for Windows and macOS. Every plug-in comes with a fully featured 14-day trial.</span></p>
@@ -102,7 +101,6 @@
 
   <div class="grid" id="cards"></div>
 
-  <div class="dl" id="rows"></div>
 </main>
 
 <footer>
@@ -116,7 +114,7 @@
 </footer>
 
 <script>
-// ---- the plug-ins: add a block here and the page shows it (cards and downloads). status: 'out' = released, 'soon' = coming soon.
+// ---- the plug-ins: add a block here and the page shows it (cards). status: 'out' = released, 'soon' = coming soon.
 var SITE = 'https://ssm-audio.github.io/';
 var PLUGINS = [
   {
@@ -160,8 +158,6 @@ var PLUGINS = [
 
 var lang = (localStorage.getItem('ssm-lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'));
 var isMac = /Mac/i.test(navigator.platform || navigator.userAgent) && !/iPhone|iPad/i.test(navigator.userAgent);
-var versions = {};
-var picked = {};
 
 function T(o) { return o[lang] || o.en; }
 function abs(p) { return /^https?:/.test(p) ? p : p; }
@@ -172,12 +168,12 @@ function renderCards() {
   PLUGINS.forEach(function (p) {
     var out = p.status === 'out';
     h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out ? '' : ' soon') + '">' + (out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span></h3>';
-    h += '<strong style="font-weight:600">' + T(p.tag) + '</strong>';
     if (p.shot) h += '<img class="shot" src="' + p.shot + '" alt="' + p.name + '">';
+    h += '<strong style="font-weight:600;display:block;margin-top:10px">' + T(p.tag) + '</strong>';
     h += '<p>' + T(p.text) + '</p>';
     h += '<div class="links">';
     if (out) {
-      h += '<a class="btn" href="#dl-' + p.id + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
+      h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
       h += '<a class="btn ghost" href="' + p.buy + '">' + (lang === 'ru' ? 'Купить' : 'Buy') + '</a>';
       h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else {
@@ -188,62 +184,17 @@ function renderCards() {
   document.getElementById('cards').innerHTML = h;
 }
 
-function renderRows() {
-  var h = '';
-  PLUGINS.forEach(function (p) {
-    var out = p.status === 'out';
-    var os = picked[p.id] || (isMac ? 'mac' : 'win');
-    h += '<div class="row' + (out ? '' : ' soonrow') + '" id="dl-' + p.id + '"><h3>' + p.name + '</h3><div>';
-    if (out) {
-      var v = versions[p.id];
-      var url = v ? (os === 'mac' ? p.mac(v) : p.win(v)) : p.page;
-      h += '<div class="tabs"><button type="button" data-p="' + p.id + '" data-os="mac" class="' + (os === 'mac' ? 'on' : '') + '">macOS</button>' +
-           '<button type="button" data-p="' + p.id + '" data-os="win" class="' + (os === 'win' ? 'on' : '') + '">Windows</button></div>';
-      h += '<a class="pill" href="' + url + '">' + ICON + (lang === 'ru' ? 'скачать ' : 'download ') + p.name + (v ? ' <small>v' + v + '</small>' : '') + '</a>';
-      h += '<p class="req">' + T(os === 'mac' ? p.reqMac : p.reqWin) + '</p>';
-      if (os === 'mac') h += '<p class="req"><a href="' + p.macGuide + '">' + (lang === 'ru' ? 'Как открыть установщик на macOS' : 'How to open the installer on a Mac') + '</a></p>';
-      h += '<p class="req">' + (lang === 'ru' ? 'Пробный период 14 дней, все функции открыты. Установщик: <a href="' + p.page + '">страница скачивания</a>.' : '14-day trial, all functions open. Installers: <a href="' + p.page + '">download page</a>.') + '</p>';
-    } else {
-      h += '<span class="pill off">' + (lang === 'ru' ? 'скоро' : 'coming soon') + '</span><p class="req">' + T(p.tag) + '</p>';
-    }
-    h += '</div><div class="res">';
-    if (out) {
-      h += '<h4>' + (lang === 'ru' ? 'Материалы' : 'Resources') + '</h4>';
-      h += '<a href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'руководство' : 'manual') + '</a>';
-      h += '<a href="' + p.changelog + '">' + (lang === 'ru' ? 'история изменений' : 'change log') + '</a>';
-      h += '<a href="' + p.buy + '">' + (lang === 'ru' ? 'купить ключ' : 'buy a licence') + '</a>';
-    }
-    h += '</div></div>';
-  });
-  document.getElementById('rows').innerHTML = h;
-}
-
 function render() {
   document.body.className = lang === 'ru' ? 'ru' : '';
   document.documentElement.lang = lang;
   document.getElementById('b-en').className = lang === 'en' ? 'on' : '';
   document.getElementById('b-ru').className = lang === 'ru' ? 'on' : '';
   renderCards();
-  renderRows();
 }
 
 document.getElementById('b-en').onclick = function () { lang = 'en'; try { localStorage.setItem('ssm-lang', lang); } catch (e) {} render(); };
 document.getElementById('b-ru').onclick = function () { lang = 'ru'; try { localStorage.setItem('ssm-lang', lang); } catch (e) {} render(); };
-document.getElementById('rows').addEventListener('click', function (e) {
-  var b = e.target.closest('button[data-os]');
-  if (!b) return;
-  picked[b.getAttribute('data-p')] = b.getAttribute('data-os');
-  renderRows();
-});
-
 render();
-// the newest version of every released plug-in: from its own latest.json (the same file that the plug-in reads to say "a new version is available")
-PLUGINS.forEach(function (p) {
-  if (p.status !== 'out' || !p.latest) return;
-  fetch(p.latest, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
-    if (j && /^\d+\.\d+\.\d+$/.test(j.version)) { versions[p.id] = j.version; renderRows(); }
-  }).catch(function () { /* without it the button opens the download page */ });
-});
 </script>
 </body>
 </html>
