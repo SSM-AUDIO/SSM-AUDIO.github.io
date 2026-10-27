@@ -139,7 +139,17 @@ var PLUGINS = [
     id: 'ba3', name: 'Best Align 3', status: 'soon',
     tag: { en: 'Phase alignment of drum microphones', ru: 'Выравнивание фазы микрофонов барабанов' },
     text: { en: 'Put it on every microphone track of a live drum kit: it shows how the microphones add up and lines them up in time and polarity.',
-            ru: 'Ставится на каждую дорожку микрофона живых барабанов: показывает, как микрофоны складываются, и выравнивает их по времени и полярности.' }
+            ru: 'Ставится на каждую дорожку микрофона живых барабанов: показывает, как микрофоны складываются, и выравнивает их по времени и полярности.' },
+    // when Best Align 3 is released: change status to 'out' (the card gets Download / Buy / Manual, the downloads list gets the installer)
+    shot: 'images/best-align-3.png',
+    base: SITE + 'Best-Align-3/',
+    page: 'Best-Align-3/download.html', buy: 'Best-Align-3/payment.html', manualEn: 'Best-Align-3/manual-en.html', manualRu: 'Best-Align-3/manual-ru.html',
+    changelog: 'https://github.com/SSM-AUDIO/Best-Align-3/blob/main/CHANGELOG.md', macGuide: 'Best-Align-3/download.html',
+    latest: 'Best-Align-3/latest.json',
+    win: function (v) { return 'https://github.com/SSM-AUDIO/Best-Align-3/releases/download/v' + v + '/BestAlign3-' + v + '-Setup.exe'; },
+    mac: function () { return SITE + 'Best-Align-3/download.html'; },
+    reqWin: { en: 'Windows 10 / 11 (64-bit), VST3', ru: 'Windows 10 / 11 (64 бита), VST3' },
+    reqMac: { en: 'The macOS version is coming later', ru: 'Версия для macOS появится позже' }
   },
   {
     id: 'bl3', name: 'Best Limiter 3', status: 'soon',
