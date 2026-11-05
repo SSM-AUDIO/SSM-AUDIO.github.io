@@ -38,6 +38,7 @@
   .card p { margin:0; color:var(--muted); }
   .card .shot { border-radius:10px; width:100%; height:auto; display:block; box-shadow:0 6px 22px rgba(0,0,0,.16); }
   .badge { font-size:12px; font-weight:600; letter-spacing:.5px; text-transform:uppercase; padding:3px 10px; border-radius:99px; background:var(--pill); color:var(--pill-ink); }
+  .card .shot.tall { width:auto; max-width:100%; max-height:360px; margin:0 auto; }
   .badge.soon { background:transparent; color:var(--soon); border:1px solid var(--line); }
   .card .links { margin-top:auto; padding-top:6px; display:flex; gap:10px; flex-wrap:wrap; }
   .btn { display:inline-flex; align-items:center; gap:8px; background:var(--pill); color:var(--pill-ink); font-weight:600; padding:9px 22px; border-radius:99px; }
@@ -148,6 +149,14 @@ var PLUGINS = [
     reqMac: { en: 'macOS 10.15 or newer (Apple chips and Intel), VST3', ru: 'macOS 10.15 и новее (чипы Apple и Intel), VST3' }
   },
   {
+    // free, not released yet: the card without Download and Manual buttons (when it is released: status 'out' with page / manual links like the others)
+    id: 'vogog', name: 'VOGOG', status: 'free',
+    tag: { en: 'A free resonant high-pass filter', ru: 'Бесплатный резонансный фильтр высоких частот' },
+    text: { en: 'A simple filter for the low end with two knobs, amplitude and frequency, and an x2 button. Free: it is activated once with a button in the plug-in.',
+            ru: 'Простой фильтр для низа с двумя ручками, amplitude и frequency, и кнопкой x2. Бесплатный: один раз активируется кнопкой в плагине.' },
+    shot: 'images/vogog.png', tall: true
+  },
+  {
     id: 'bl3', name: 'Best Limiter 3', status: 'soon',
     tag: { en: 'Saturator, clipper and limiter in one', ru: 'Сатуратор, клиппер и лимитер в одном' },
     text: { en: 'Three loudness tools in one plug-in, built for fast and loud mixes.',
@@ -165,20 +174,23 @@ var ICON = '<span class="ic"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0-5-5m
 function renderCards() {
   var h = '';
   PLUGINS.forEach(function (p) {
-    var out = p.status === 'out';
-    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out ? '' : ' soon') + '">' + (out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span></h3>';
-    if (p.shot) h += '<img class="shot" src="' + p.shot + '" alt="' + p.name + '">';
+    var out = p.status === 'out', free = p.status === 'free';
+    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out || free ? '' : ' soon') + '">' + (free ? (lang === 'ru' ? 'бесплатный' : 'free') : out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span></h3>';
+    if (p.shot) h += '<img class="shot' + (p.tall ? ' tall' : '') + '" src="' + p.shot + '" alt="' + p.name + '">';
     h += '<strong style="font-weight:600;display:block;margin-top:10px">' + T(p.tag) + '</strong>';
     h += '<p>' + T(p.text) + '</p>';
-    h += '<div class="links">';
-    if (out) {
+    if (! free) h += '<div class="links">';
+    if (free) {
+      /* no buttons yet */
+    } else if (out) {
       h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
       h += '<a class="btn ghost" href="' + p.buy + '">' + (lang === 'ru' ? 'Купить' : 'Buy') + '</a>';
       h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else {
       h += '<span class="btn ghost off">' + (lang === 'ru' ? 'Скоро' : 'Coming soon') + '</span>';
     }
-    h += '</div></article>';
+    if (! free) h += '</div>';
+    h += '</article>';
   });
   document.getElementById('cards').innerHTML = h;
 }
