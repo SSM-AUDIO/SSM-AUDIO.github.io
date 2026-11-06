@@ -151,16 +151,24 @@ var PLUGINS = [
   {
     // free, not released yet: the card without Download and Manual buttons (when it is released: status 'out' with page / manual links like the others)
     id: 'vogog', name: 'VOGOG', status: 'free',
-    tag: { en: 'A free low-frequency processor', ru: 'Бесплатный процессор низких частот' },
+    tag: { en: 'A low-frequency processor', ru: 'Процессор низких частот' },
     text: { en: 'A specialised low-frequency processor that gives bass, kick drums and other sources a sense of extra mass, depth and power.',
             ru: 'Это специализированный процессор низких частот, предназначенный для придания басу, бочке и другим источникам ощущения дополнительной массы, глубины и мощи.' },
-    shot: 'images/vogog.png', tall: true
+    shot: 'images/vogog.png', tall: true, soon: true
   },
   {
     id: 'bl3', name: 'Best Limiter 3', status: 'soon',
     tag: { en: 'Saturator, clipper and limiter in one', ru: 'Сатуратор, клиппер и лимитер в одном' },
     text: { en: 'Three loudness tools in one plug-in, built for fast and loud mixes.',
-            ru: 'Три инструмента громкости в одном плагине, для быстрых и громких миксов.' }
+            ru: 'Три инструмента громкости в одном плагине, для быстрых и громких миксов.' },
+    shot: 'images/best-limiter-3.png'
+  },
+  {
+    id: 'ir', name: 'SSM-Audio IR Studio', status: 'soon',
+    tag: { en: 'Impulse responses: play, generate, capture', ru: 'Импульсные характеристики: проигрыватель, генератор, захват' },
+    text: { en: 'A tool for working with impulse responses: load and edit an IR, generate one or capture it, and look at it as a waveform, spectrum, frequency response, phase and group delay.',
+            ru: 'Инструмент для работы с импульсными характеристиками: загрузить и отредактировать IR, создать или записать его, и посмотреть как форму волны, спектр, АЧХ, фазу и групповую задержку.' },
+    shot: 'images/ir-studio.webp'
   }
 ];
 
@@ -175,7 +183,8 @@ function renderCards() {
   var h = '';
   PLUGINS.forEach(function (p) {
     var out = p.status === 'out', free = p.status === 'free';
-    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out || free ? '' : ' soon') + '">' + (free ? (lang === 'ru' ? 'бесплатный' : 'free') : out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span></h3>';
+    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out || free ? '' : ' soon') + '">' + (free ? (lang === 'ru' ? 'бесплатный' : 'free') : out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span>' +
+      (p.soon ? ' <span class="badge soon">' + (lang === 'ru' ? 'скоро' : 'coming soon') + '</span>' : '') + '</h3>';
     if (p.shot) h += '<img class="shot' + (p.tall ? ' tall' : '') + '" src="' + p.shot + '" alt="' + p.name + '">';
     h += '<strong style="font-weight:600;display:block;margin-top:10px">' + T(p.tag) + '</strong>';
     h += '<p>' + T(p.text) + '</p>';
