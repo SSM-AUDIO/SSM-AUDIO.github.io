@@ -149,12 +149,13 @@ var PLUGINS = [
     reqMac: { en: 'macOS 10.15 or newer (Apple chips and Intel), VST3', ru: 'macOS 10.15 и новее (чипы Apple и Intel), VST3' }
   },
   {
-    // free, not released yet: the card without Download and Manual buttons (when it is released: status 'out' with page / manual links like the others)
+    // free: Download and Manual buttons (no Buy)
     id: 'vogog', name: 'VOGOG', status: 'free',
     tag: { en: 'A low-frequency processor', ru: 'Процессор низких частот' },
     text: { en: 'A specialised low-frequency processor that gives bass, kick drums and other sources a sense of extra mass, depth and power.',
             ru: 'Это специализированный процессор низких частот, предназначенный для придания басу, бочке и другим источникам ощущения дополнительной массы, глубины и мощи.' },
-    shot: 'images/vogog.png', tall: true, soon: true
+    shot: 'images/vogog.png', tall: true,
+    page: 'VOGOG/download.html', manualEn: 'VOGOG/manual-en.html', manualRu: 'VOGOG/manual-ru.html'
   },
   {
     id: 'bl3', name: 'Best Limiter 3', status: 'soon',
@@ -185,12 +186,16 @@ function renderCards() {
     var out = p.status === 'out', free = p.status === 'free';
     h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out || free ? '' : ' soon') + '">' + (free ? (lang === 'ru' ? 'бесплатный' : 'free') : out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span>' +
       (p.soon ? ' <span class="badge soon">' + (lang === 'ru' ? 'скоро' : 'coming soon') + '</span>' : '') + '</h3>';
+    var hasLinks = !(free && !p.page);
     if (p.shot) h += '<img class="shot' + (p.tall ? ' tall' : '') + '" src="' + p.shot + '" alt="' + p.name + '">';
     h += '<strong style="font-weight:600;display:block;margin-top:10px">' + T(p.tag) + '</strong>';
     h += '<p>' + T(p.text) + '</p>';
-    if (! free) h += '<div class="links">';
-    if (free) {
-      /* no buttons yet */
+    if (hasLinks) h += '<div class="links">';
+    if (free && ! p.page) {
+      /* a free plug-in that is not released yet: no buttons */
+    } else if (free) {
+      h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
+      h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else if (out) {
       h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
       h += '<a class="btn ghost" href="' + p.buy + '">' + (lang === 'ru' ? 'Купить' : 'Buy') + '</a>';
@@ -198,7 +203,7 @@ function renderCards() {
     } else {
       h += '<span class="btn ghost off">' + (lang === 'ru' ? 'Скоро' : 'Coming soon') + '</span>';
     }
-    if (! free) h += '</div>';
+    if (hasLinks) h += '</div>';
     h += '</article>';
   });
   document.getElementById('cards').innerHTML = h;
