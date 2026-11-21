@@ -163,8 +163,7 @@ var PLUGINS = [
     text: { en: 'Shape peaks and set a ceiling. Unlock Saturator with a 500 RUB key.',
             ru: 'Настраивайте срез пиков и выходной потолок. Ключ сатуратора стоит 500 ₽.' },
     shot: 'images/best-limiter-3.png',
-    page: 'Best-Limiter-3/download.html', buy: 'Best-Limiter-3/payment.html',
-    buyText: { en: 'Unlock Saturator', ru: 'Ключ сатуратора' },
+    page: 'Best-Limiter-3/download.html',
     manualEn: 'Best-Limiter-3/manual-en.html', manualRu: 'Best-Limiter-3/manual-ru.html'
   },
   {
@@ -202,7 +201,7 @@ function renderCards() {
       h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else if (out) {
       h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
-      h += '<a class="btn ghost" href="' + p.buy + '">' + (p.buyText ? T(p.buyText) : (lang === 'ru' ? 'Купить' : 'Buy')) + '</a>';
+      if (p.buy) h += '<a class="btn ghost" href="' + p.buy + '">' + (p.buyText ? T(p.buyText) : (lang === 'ru' ? 'Купить' : 'Buy')) + '</a>';
       h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else {
       h += '<span class="btn ghost off">' + (lang === 'ru' ? 'Скоро' : 'Coming soon') + '</span>';
