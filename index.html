@@ -158,11 +158,14 @@ var PLUGINS = [
     page: 'VOGOG/download.html', manualEn: 'VOGOG/manual-en.html', manualRu: 'VOGOG/manual-ru.html'
   },
   {
-    id: 'bl3', name: 'Best Limiter 3', status: 'soon',
-    tag: { en: 'Saturator, clipper and limiter in one', ru: 'Сатуратор, клиппер и лимитерм' },
-    text: { en: 'Three loudness tools in one plug-in, built for fast and loud mixes.',
-            ru: 'Три инструмента громкости в одном плагине, для быстрых и громких миксов.' },
-    shot: 'images/best-limiter-3.png'
+    id: 'bl3', name: 'Best Limiter 3', status: 'out',
+    tag: { en: 'Free clipper and limiter', ru: 'Бесплатные клиппер и лимитер' },
+    text: { en: 'Shape peaks and set a ceiling. Unlock Saturator with a 500 RUB key.',
+            ru: 'Настраивайте срез пиков и выходной потолок. Ключ сатуратора стоит 500 ₽.' },
+    shot: 'images/best-limiter-3.png',
+    page: 'Best-Limiter-3/download.html', buy: 'Best-Limiter-3/payment.html',
+    buyText: { en: 'Unlock Saturator', ru: 'Ключ сатуратора' },
+    manualEn: 'Best-Limiter-3/manual-en.html', manualRu: 'Best-Limiter-3/manual-ru.html'
   },
   {
     id: 'ir', name: 'IR Studio', status: 'free',
@@ -199,7 +202,7 @@ function renderCards() {
       h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else if (out) {
       h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
-      h += '<a class="btn ghost" href="' + p.buy + '">' + (lang === 'ru' ? 'Купить' : 'Buy') + '</a>';
+      h += '<a class="btn ghost" href="' + p.buy + '">' + (p.buyText ? T(p.buyText) : (lang === 'ru' ? 'Купить' : 'Buy')) + '</a>';
       h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
     } else {
       h += '<span class="btn ghost off">' + (lang === 'ru' ? 'Скоро' : 'Coming soon') + '</span>';
