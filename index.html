@@ -38,7 +38,12 @@
   .card p { margin:0; color:var(--muted); }
   .card .shot { border-radius:10px; width:100%; height:auto; display:block; box-shadow:0 6px 22px rgba(0,0,0,.16); }
   .badge { font-size:12px; font-weight:600; letter-spacing:.5px; text-transform:uppercase; padding:3px 10px; border-radius:99px; background:var(--pill); color:var(--pill-ink); }
-  .card .shot.tall { width:auto; max-width:100%; max-height:360px; margin:0 auto; }
+  .card .shot.tall { width:100%; height:180px; object-fit:cover; object-position:center; }
+  .shot-button { display:block; width:100%; padding:0; border:0; background:transparent; cursor:zoom-in; }
+  .image-dialog { padding:0; border:0; background:transparent; max-width:95vw; max-height:95vh; }
+  .image-dialog::backdrop { background:rgba(0,0,0,.82); }
+  .image-dialog img { display:block; max-width:95vw; max-height:90vh; object-fit:contain; }
+  .image-close { display:block; margin:0 0 8px auto; padding:6px 14px; border:0; border-radius:8px; font:inherit; cursor:pointer; }
   .badge.soon { background:transparent; color:var(--soon); border:1px solid var(--line); }
   .card .links { margin-top:auto; padding-top:6px; display:flex; gap:10px; flex-wrap:wrap; }
   .btn { display:inline-flex; align-items:center; gap:8px; background:var(--pill); color:var(--pill-ink); font-weight:600; padding:9px 22px; border-radius:99px; }
@@ -113,6 +118,7 @@
   </div>
 </footer>
 
+<dialog class="image-dialog" id="image-dialog" aria-label="Image preview"><button class="image-close" type="button" aria-label="Close">×</button><img alt=""></dialog>
 <script>
 // ---- the plug-ins: add a block here and the page shows it (cards). status: 'out' = released, 'soon' = coming soon.
 var SITE = 'https://ssm-audio.github.io/';
@@ -187,10 +193,10 @@ function renderCards() {
   var h = '';
   PLUGINS.forEach(function (p) {
     var out = p.status === 'out', free = p.status === 'free';
-    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out || free ? '' : ' soon') + '">' + (free ? (lang === 'ru' ? 'бесплатный' : 'free') : out ? (lang === 'ru' ? 'доступен' : 'available') : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span>' +
+    h += '<article class="card"><h3>' + p.name + ' <span class="badge' + (out || free ? '' : ' soon') + '">' + (free ? (lang === 'ru' ? 'бесплатный' : 'free') : out ? (p.buy ? (lang === 'ru' ? 'триал' : 'trial') : (lang === 'ru' ? 'доступен' : 'available')) : (lang === 'ru' ? 'скоро' : 'coming soon')) + '</span>' +
       (p.soon ? ' <span class="badge soon">' + (lang === 'ru' ? 'скоро' : 'coming soon') + '</span>' : '') + '</h3>';
     var hasLinks = !(free && !p.page);
-    if (p.shot) h += '<img class="shot' + (p.tall ? ' tall' : '') + '" src="' + p.shot + '" alt="' + p.name + '">';
+    if (p.shot) h += '<button class="shot-button" type="button" aria-label="' + p.name + ' — zoom"><img class="shot' + (p.tall ? ' tall' : '') + '" src="' + p.shot + '" alt="' + p.name + '"></button>';
     h += '<strong style="font-weight:600;display:block;margin-top:10px">' + T(p.tag) + '</strong>';
     h += '<p>' + T(p.text) + '</p>';
     if (hasLinks) h += '<div class="links">';
@@ -211,6 +217,17 @@ function renderCards() {
   });
   document.getElementById('cards').innerHTML = h;
 }
+
+var imageDialog = document.getElementById('image-dialog');
+document.getElementById('cards').addEventListener('click', function (e) {
+  var button = e.target.closest('.shot-button');
+  if (!button) return;
+  var img = button.querySelector('img'), preview = imageDialog.querySelector('img');
+  preview.src = img.src; preview.alt = img.alt;
+  imageDialog.showModal();
+});
+imageDialog.querySelector('.image-close').onclick = function () { imageDialog.close(); };
+imageDialog.addEventListener('click', function (e) { if (e.target === imageDialog) imageDialog.close(); });
 
 function render() {
   document.body.className = lang === 'ru' ? 'ru' : '';
