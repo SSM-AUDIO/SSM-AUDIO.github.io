@@ -204,11 +204,11 @@ function renderCards() {
       /* a free plug-in that is not released yet: no buttons */
     } else if (free) {
       h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
-      h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
+      h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Мануал' : 'Manual') + '</a>';
     } else if (out) {
       h += '<a class="btn" href="' + p.page + '">' + (lang === 'ru' ? 'Скачать' : 'Download') + '</a>';
       if (p.buy) h += '<a class="btn ghost" href="' + p.buy + '">' + (p.buyText ? T(p.buyText) : (lang === 'ru' ? 'Купить' : 'Buy')) + '</a>';
-      h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Руководство' : 'Manual') + '</a>';
+      h += '<a class="btn ghost" href="' + (lang === 'ru' ? p.manualRu : p.manualEn) + '">' + (lang === 'ru' ? 'Мануал' : 'Manual') + '</a>';
     } else {
       h += '<span class="btn ghost off">' + (lang === 'ru' ? 'Скоро' : 'Coming soon') + '</span>';
     }
