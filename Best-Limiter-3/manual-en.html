@@ -1,8 +1,85 @@
-<!doctype html>
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Best Limiter 3 — User guide</title><main><h1>Best Limiter 3 — User guide</h1>
-<h2>Install</h2><p>Close your DAW and run the VST3 installer. Reopen your DAW, rescan plugins and insert Best Limiter 3 on a track or bus. Windows requires a 64-bit CPU with AVX2.</p>
-<h2>Clipper</h2><p>Lower Threshold until clipped peaks appear on the waveform. Use Shape to soften the knee. Delta lets you hear the difference.</p>
-<h2>Limiter</h2><p>Raise Gain and set Output. Use 1:1 to compare at a matched level.</p>
-<h2>Saturator</h2><p>Clipper and Limiter are free. Click the Saturator section and enter your purchase email and 500 RUB key. Drive adds saturation and Mix blends it with the original signal. To move your key, choose Deactivate Saturator on this computer in Settings.</p>
-<h2>Compare</h2><p>Use A/B to compare settings. Click a module title to toggle it or drag to reorder. Bypass switches off the chain.</p>
-</main></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Limiter 3 — User manual</title>
+<style>
+  :root { color-scheme: light dark; --ink:#1d2026; --muted:#5d6572; --line:#d9dce2; --accent:#6b46d9; --panel:#f4f1fb; --warn:#fff5e0; --warnline:#e0a030; --tip:#e9f8f0; --tipline:#2a9d63; --bg:#fff; --code:#eef0f4; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#e8eaee; --muted:#9aa0ac; --line:#343840; --accent:#b07cff; --panel:#23262b; --warn:#3a3020; --tip:#1d3328; --bg:#15171a; --code:#262a31; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 "Segoe UI", system-ui, Arial, sans-serif; }
+  header.top { background:#17191d; color:#fff; padding:28px 20px; text-align:center; }
+  header.top h1 { margin:0; font-size:34px; letter-spacing:.03em; border:none; color:#fff; }
+  header.top .sub { color:#b07cff; font-size:18px; margin-top:4px; }
+  header.top .ver { color:#9aa0ac; font-size:14px; margin-top:8px; }
+  header.top a { color:#cfd2da; }
+  main { max-width:900px; margin:0 auto; padding:10px 20px 60px; }
+  h1 { font-size:26px; margin:46px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--accent); }
+  h2 { font-size:19px; margin:28px 0 8px; color:var(--accent); }
+  p { margin:0 0 12px; } ul, ol { margin:0 0 14px; padding-left:24px; } li { margin-bottom:5px; }
+  code, kbd { font-family:Consolas, "Courier New", monospace; font-size:14px; background:var(--code); padding:1px 6px; border-radius:4px; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 18px; font-size:15px; display:block; overflow-x:auto; }
+  th, td { border:1px solid var(--line); padding:7px 10px; vertical-align:top; text-align:left; }
+  th { background:var(--panel); font-weight:600; }
+  .tip, .warn { padding:10px 14px; margin:14px 0; border-left:4px solid; border-radius:4px; }
+  .tip { background:var(--tip); border-color:var(--tipline); } .warn { background:var(--warn); border-color:var(--warnline); }
+  .tip b:first-child, .warn b:first-child { display:block; margin-bottom:2px; }
+  figure { margin:16px 0; text-align:center; } figure img { max-width:100%; border-radius:8px; border:1px solid var(--line); }
+  figcaption { font-size:13px; color:var(--muted); margin-top:6px; }
+  nav.toc { background:var(--panel); border-radius:10px; padding:14px 22px; margin:20px 0; columns:2; column-gap:30px; } nav.toc a { color:inherit; text-decoration:none; display:block; padding:2px 0; }
+  .steps { counter-reset:s; list-style:none; padding-left:0; } .steps li { counter-increment:s; position:relative; padding-left:38px; margin-bottom:10px; }
+  .steps li::before { content:counter(s); position:absolute; left:0; top:1px; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; font-weight:700; font-size:13px; text-align:center; line-height:26px; }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:16px; color:var(--muted); font-size:14px; }
+  @media (max-width:640px) { nav.toc { columns:1; } }
+  main h2 { font-size:24px; color:var(--ink); margin:36px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--accent); }
+  main a { color:var(--accent); }
+  nav.toc a:hover, nav.toc a:focus-visible { text-decoration:underline; }
+  figure img { display:block; height:auto; margin:auto; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>BEST LIMITER 3</h1>
+  <div class="sub">User manual</div>
+  <div class="ver">Version 0.1.0 · VST3 · Windows 10/11 · macOS · <a href="manual-ru.html" hreflang="ru">Русская версия</a></div>
+</header>
+<main>
+  <nav class="toc" aria-label="Contents">
+    <a href="#install">1. Install</a>
+    <a href="#clipper">2. Clipper</a>
+    <a href="#limiter">3. Limiter</a>
+    <a href="#saturator">4. Saturator</a>
+    <a href="#compare">5. Compare</a>
+  </nav>
+  <figure><img src="images/best-limiter-3.png" alt="Best Limiter 3 plugin window" width="1280" height="704"></figure>
+
+  <section aria-labelledby="install">
+    <h2 id="install">1. Install</h2>
+    <p>Close your DAW and run the VST3 installer. Reopen your DAW, rescan plugins and insert Best Limiter 3 on a track or bus. Windows requires a 64-bit CPU with AVX2.</p>
+  </section>
+
+  <section aria-labelledby="clipper">
+    <h2 id="clipper">2. Clipper</h2>
+    <p>Lower Threshold until clipped peaks appear on the waveform. Use Shape to soften the knee. Delta lets you hear the difference.</p>
+  </section>
+
+  <section aria-labelledby="limiter">
+    <h2 id="limiter">3. Limiter</h2>
+    <p>Raise Gain and set Output. Use 1:1 to compare at a matched level.</p>
+  </section>
+
+  <section aria-labelledby="saturator">
+    <h2 id="saturator">4. Saturator</h2>
+    <p>Clipper and Limiter are free. Click the Saturator section and enter your purchase email and 500 RUB key. Drive adds saturation and Mix blends it with the original signal. To move your key, choose Deactivate Saturator on this computer in Settings.</p>
+  </section>
+
+  <section aria-labelledby="compare">
+    <h2 id="compare">5. Compare</h2>
+    <p>Use A/B to compare settings. Click a module title to toggle it or drag to reorder. Bypass switches off the chain.</p>
+  </section>
+  <footer>SSM-Audio · Version 0.1.0</footer>
+</main>
+</body>
+</html>

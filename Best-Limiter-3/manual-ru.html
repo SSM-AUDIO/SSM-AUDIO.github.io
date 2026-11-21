@@ -1,8 +1,85 @@
-<!doctype html>
-<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Best Limiter 3 — Руководство</title><main><h1>Best Limiter 3 — Руководство</h1>
-<h2>Установка</h2><p>Закройте DAW и запустите установщик VST3. Откройте DAW, пересканируйте плагины и добавьте Best Limiter 3 на дорожку или шину. На Windows требуется 64-разрядный процессор с AVX2.</p>
-<h2>Клиппер</h2><p>Уменьшите Threshold, пока на волне не появятся срезанные пики. Shape меняет мягкость среза. Delta позволяет услышать разницу.</p>
-<h2>Лимитер</h2><p>Поднимите Gain и выставьте Output. Кнопка 1:1 компенсирует прибавку громкости для сравнения.</p>
-<h2>Сатуратор</h2><p>Клиппер и лимитер бесплатны. Сатуратор открывается ключом за 500 ₽ на один компьютер, без пробного периода. Нажмите на секцию Saturator, введите почту покупки и ключ. Drive задаёт насыщение, Mix смешивает с исходным сигналом. Для переноса ключа выберите Deactivate Saturator on this computer в меню шестерёнки.</p>
-<h2>Сравнение</h2><p>Переключайте A/B для сравнения настроек. Название модуля включает его, перетаскивание меняет порядок. Общий Bypass отключает обработку.</p>
-</main></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Limiter 3 — Руководство пользователя</title>
+<style>
+  :root { color-scheme: light dark; --ink:#1d2026; --muted:#5d6572; --line:#d9dce2; --accent:#6b46d9; --panel:#f4f1fb; --warn:#fff5e0; --warnline:#e0a030; --tip:#e9f8f0; --tipline:#2a9d63; --bg:#fff; --code:#eef0f4; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#e8eaee; --muted:#9aa0ac; --line:#343840; --accent:#b07cff; --panel:#23262b; --warn:#3a3020; --tip:#1d3328; --bg:#15171a; --code:#262a31; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 "Segoe UI", system-ui, Arial, sans-serif; }
+  header.top { background:#17191d; color:#fff; padding:28px 20px; text-align:center; }
+  header.top h1 { margin:0; font-size:34px; letter-spacing:.03em; border:none; color:#fff; }
+  header.top .sub { color:#b07cff; font-size:18px; margin-top:4px; }
+  header.top .ver { color:#9aa0ac; font-size:14px; margin-top:8px; }
+  header.top a { color:#cfd2da; }
+  main { max-width:900px; margin:0 auto; padding:10px 20px 60px; }
+  h1 { font-size:26px; margin:46px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--accent); }
+  h2 { font-size:19px; margin:28px 0 8px; color:var(--accent); }
+  p { margin:0 0 12px; } ul, ol { margin:0 0 14px; padding-left:24px; } li { margin-bottom:5px; }
+  code, kbd { font-family:Consolas, "Courier New", monospace; font-size:14px; background:var(--code); padding:1px 6px; border-radius:4px; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 18px; font-size:15px; display:block; overflow-x:auto; }
+  th, td { border:1px solid var(--line); padding:7px 10px; vertical-align:top; text-align:left; }
+  th { background:var(--panel); font-weight:600; }
+  .tip, .warn { padding:10px 14px; margin:14px 0; border-left:4px solid; border-radius:4px; }
+  .tip { background:var(--tip); border-color:var(--tipline); } .warn { background:var(--warn); border-color:var(--warnline); }
+  .tip b:first-child, .warn b:first-child { display:block; margin-bottom:2px; }
+  figure { margin:16px 0; text-align:center; } figure img { max-width:100%; border-radius:8px; border:1px solid var(--line); }
+  figcaption { font-size:13px; color:var(--muted); margin-top:6px; }
+  nav.toc { background:var(--panel); border-radius:10px; padding:14px 22px; margin:20px 0; columns:2; column-gap:30px; } nav.toc a { color:inherit; text-decoration:none; display:block; padding:2px 0; }
+  .steps { counter-reset:s; list-style:none; padding-left:0; } .steps li { counter-increment:s; position:relative; padding-left:38px; margin-bottom:10px; }
+  .steps li::before { content:counter(s); position:absolute; left:0; top:1px; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; font-weight:700; font-size:13px; text-align:center; line-height:26px; }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:16px; color:var(--muted); font-size:14px; }
+  @media (max-width:640px) { nav.toc { columns:1; } }
+  main h2 { font-size:24px; color:var(--ink); margin:36px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--accent); }
+  main a { color:var(--accent); }
+  nav.toc a:hover, nav.toc a:focus-visible { text-decoration:underline; }
+  figure img { display:block; height:auto; margin:auto; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>BEST LIMITER 3</h1>
+  <div class="sub">Руководство пользователя</div>
+  <div class="ver">Версия 0.1.0 · VST3 · Windows 10/11 · macOS · <a href="manual-en.html" hreflang="en">English version</a></div>
+</header>
+<main>
+  <nav class="toc" aria-label="Содержание">
+    <a href="#install">1. Установка</a>
+    <a href="#clipper">2. Клиппер</a>
+    <a href="#limiter">3. Лимитер</a>
+    <a href="#saturator">4. Сатуратор</a>
+    <a href="#compare">5. Сравнение</a>
+  </nav>
+  <figure><img src="images/best-limiter-3.png" alt="Окно плагина Best Limiter 3" width="1280" height="704"></figure>
+
+  <section aria-labelledby="install">
+    <h2 id="install">1. Установка</h2>
+    <p>Закройте DAW и запустите установщик VST3. Откройте DAW, пересканируйте плагины и добавьте Best Limiter 3 на дорожку или шину. На Windows требуется 64-разрядный процессор с AVX2.</p>
+  </section>
+
+  <section aria-labelledby="clipper">
+    <h2 id="clipper">2. Клиппер</h2>
+    <p>Уменьшите Threshold, пока на волне не появятся срезанные пики. Shape меняет мягкость среза. Delta позволяет услышать разницу.</p>
+  </section>
+
+  <section aria-labelledby="limiter">
+    <h2 id="limiter">3. Лимитер</h2>
+    <p>Поднимите Gain и выставьте Output. Кнопка 1:1 компенсирует прибавку громкости для сравнения.</p>
+  </section>
+
+  <section aria-labelledby="saturator">
+    <h2 id="saturator">4. Сатуратор</h2>
+    <p>Клиппер и лимитер бесплатны. Сатуратор открывается ключом за 500 ₽ на один компьютер, без пробного периода. Нажмите на секцию Saturator, введите почту покупки и ключ. Drive задаёт насыщение, Mix смешивает с исходным сигналом. Для переноса ключа выберите Deactivate Saturator on this computer в меню шестерёнки.</p>
+  </section>
+
+  <section aria-labelledby="compare">
+    <h2 id="compare">5. Сравнение</h2>
+    <p>Переключайте A/B для сравнения настроек. Название модуля включает его, перетаскивание меняет порядок. Общий Bypass отключает обработку.</p>
+  </section>
+  <footer>SSM-Audio · Версия 0.1.0</footer>
+</main>
+</body>
+</html>

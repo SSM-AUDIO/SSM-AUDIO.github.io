@@ -32,13 +32,24 @@
   .warn ol { margin:6px 0 0; padding-left:20px; }
   .key { font:700 28px Consolas, monospace; letter-spacing:1px; padding:16px 18px; border:1px solid var(--line); border-radius:14px; display:inline-block; margin:10px 0; }
   [hidden] { display:none !important; }
+  .top { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+  .top a, .lang button { margin-left:0; }
+  .top a:hover { background:var(--pill-hover); }
+  .lang { display:inline-flex; gap:4px; }
+  @media (max-width:680px) {
+    .page { padding-inline:18px; }
+    header { align-items:flex-start; flex-direction:column; margin-bottom:24px; }
+    h1 { font-size:34px; }
+    input, select { max-width:100%; }
+    .key { font-size:clamp(14px, 5.5vw, 28px); padding-inline:12px; }
+  }
 </style>
 </head>
 <body>
 <div class="page">
   <header>
     <a class="brand" href="https://ssm-audio.github.io/"><img src="../images/ssm-logo.png" alt="">SSM-Audio</a>
-    <div class="top"><a href="download.html" data-en="Download" data-ru="Скачать">Download</a><a href="manual-en.html" data-en="Manual" data-ru="Руководство">Manual</a>
+    <div class="top"><a href="download.html" data-en="Download" data-ru="Скачать">Download</a><a id="manual-link" href="manual-en.html" data-en="Manual" data-ru="Руководство">Manual</a>
       <span class="lang"><button id="l-en" type="button">EN</button><button id="l-ru" type="button">RU</button></span></div>
   </header>
 
@@ -75,8 +86,12 @@
   var SHOP = 'https://best-trigger-license.ssm-audio.workers.dev';
 
   var lang = (localStorage.getItem('ssm-lang') || ((navigator.language || 'en').slice(0, 2) === 'ru' ? 'ru' : 'en'));
+  if (lang !== 'en' && lang !== 'ru') lang = 'en';
   function applyLang() {
     document.documentElement.lang = lang;
+    document.getElementById('manual-link').href = 'manual-' + lang + '.html';
+    document.getElementById('l-en').setAttribute('aria-pressed', String(lang === 'en'));
+    document.getElementById('l-ru').setAttribute('aria-pressed', String(lang === 'ru'));
     document.querySelectorAll('[data-en]').forEach(function (el) { el.textContent = el.getAttribute('data-' + lang); });
     document.querySelectorAll('[data-ph-en]').forEach(function (el) { el.placeholder = el.getAttribute('data-ph-' + lang); });
     document.getElementById('l-en').className = lang === 'en' ? 'on' : '';

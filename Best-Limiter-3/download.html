@@ -1,34 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Best Limiter 3 — Download</title>
-  <style>
-    :root { color-scheme: dark; font: 17px/1.55 system-ui, sans-serif; background: #111317; color: #e8eaee; }
-    main { max-width: 46rem; margin: 3rem auto; padding: 0 1.25rem; }
-    a { color: #ffc078; }
-    .downloads a { display: inline-block; margin: 0.25rem 0.5rem 0.25rem 0; padding: 0.6rem 0.95rem; border: 1px solid #615044; border-radius: 0.55rem; }
-    nav { display: flex; flex-wrap: wrap; gap: 1rem; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Limiter 3 — Download</title>
+<style>
+  :root { color-scheme: light dark; --bg:#f8f7f4; --ink:#1b2233; --muted:#5d6572; --pill:#b9cdea; --pill-hover:#a3bde3; --pill-ink:#1b2233; --link:#2c6a8e; --line:#e0ddd5; --logo-filter:invert(.85); }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14161a; --ink:#e9ebf0; --muted:#a0a6b2; --pill:#3a4a6b; --pill-hover:#4a5d85; --pill-ink:#f2f4f8; --link:#8cc2e6; --line:#2c3038; --logo-filter:none; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.55 "Segoe UI", system-ui, Arial, sans-serif; }
+  .page { max-width:1180px; margin:0 auto; padding:24px 28px 56px; }
+  body:not(.ru) [data-lang="ru"], body.ru [data-lang="en"] { display:none !important; }
+  .lang { display:inline-flex; margin-left:10px; vertical-align:middle; border:1px solid var(--line); border-radius:99px; overflow:hidden; }
+  .lang button { font:inherit; font-weight:600; background:none; color:var(--ink); border:0; padding:10px 16px; cursor:pointer; }
+  .lang button.on { background:var(--pill); color:var(--pill-ink); }
+  header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:34px; }
+  .brand { display:flex; align-items:center; gap:12px; font-size:26px; font-weight:600; letter-spacing:.5px; text-decoration:none; color:var(--ink); }
+  .brand img { height:44px; filter:var(--logo-filter); }
+  .top a { display:inline-block; background:var(--pill); color:var(--pill-ink); text-decoration:none; font-weight:600; padding:12px 26px; border-radius:99px; margin-left:10px; }
+  .top a:hover { background:var(--pill-hover); }
+  .cols { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); gap:44px; align-items:center; }
+  h1 { font-size:46px; line-height:1.1; margin:0 0 10px; }
+  .tag { font-size:24px; margin:0 0 20px; }
+  ul { margin:0 0 20px; padding-left:22px; } li { margin:6px 0; }
+  .news { display:inline-block; color:var(--link); margin-bottom:26px; }
+  .dl { display:flex; flex-wrap:wrap; gap:14px; margin:6px 0 20px; }
+  .dl a { display:inline-flex; align-items:center; gap:12px; background:var(--pill); color:var(--pill-ink); text-decoration:none; font-weight:600; font-size:20px; padding:10px 28px 10px 10px; border-radius:99px; }
+  .dl a:hover { background:var(--pill-hover); }
+  .dl .ic { width:44px; height:44px; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .dl svg { width:22px; height:22px; fill:none; stroke:var(--pill-ink); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+  .note { color:var(--muted); margin:0; }
+  .shot img { width:100%; height:auto; border-radius:10px; display:block; box-shadow:0 6px 24px rgba(0,0,0,.18); }
+  @media (max-width:860px) { .cols { grid-template-columns:1fr; } h1 { font-size:38px; } .top a { padding:10px 18px; } .lang button { padding:10px 12px; } }
+  .top { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .top a, .top .lang { margin-left:0; }
+  .note + p a { color:var(--link); }
+  @media (max-width:640px) {
+    header { align-items:flex-start; flex-direction:column; margin-bottom:24px; }
+    .page { padding-inline:18px; }
+    .dl a { font-size:17px; padding-right:18px; }
+  }
+</style>
 </head>
 <body>
-<main>
-  <a href="../">SSM-Audio</a>
-  <h1>Best Limiter 3</h1>
-  <p>Free clipper and limiter. Optional Saturator key · 500 RUB.</p>
-  <p lang="ru">Клиппер и лимитер бесплатны. Ключ сатуратора — 500 ₽.</p>
-  <div class="downloads">
-    <a href="https://github.com/SSM-AUDIO/SSM-AUDIO.github.io/releases/download/bl3-v0.1.0/BestLimiter3-0.1.0-Setup.exe">Windows 10/11 · x64 · AVX2</a>
-    <a href="https://github.com/SSM-AUDIO/SSM-AUDIO.github.io/releases/download/bl3-v0.1.0/BestLimiter3-0.1.0-macOS.pkg">macOS 10.15+ · Intel / Apple Silicon</a>
+
+<main class="page">
+  <header>
+    <a class="brand" href="../"><img src="../images/ssm-logo.png" alt="">SSM-Audio</a>
+    <nav class="top" aria-label="Product links / Ссылки">
+      <a href="payment.html"><span data-lang="en">Unlock Saturator</span><span data-lang="ru">Ключ сатуратора</span></a>
+      <a data-lang="en" href="manual-en.html">Manual</a>
+      <a data-lang="ru" href="manual-ru.html">Руководство</a>
+      <span class="lang" role="group" aria-label="Language / Язык"><button id="b-en" type="button" aria-pressed="true">EN</button><button id="b-ru" type="button" aria-pressed="false">RU</button></span>
+    </nav>
+  </header>
+  <div class="cols">
+    <div>
+      <h1>Best Limiter 3</h1>
+      <p class="tag"><span data-lang="en">Free clipper and limiter</span><span data-lang="ru">Бесплатные клиппер и лимитер</span></p>
+      <ul>
+        <li><span data-lang="en">Shape peaks with oversampling up to 32×.</span><span data-lang="ru">Срезайте пики с оверсемплингом до 32×.</span></li>
+        <li><span data-lang="en">Set the output ceiling and compare at matched loudness with 1:1.</span><span data-lang="ru">Задайте выходной потолок и сравните звук на одинаковой громкости кнопкой 1:1.</span></li>
+        <li><span data-lang="en">Unlock the optional Saturator with a 500 RUB key.</span><span data-lang="ru">Ключ дополнительного сатуратора стоит 500 ₽.</span></li>
+      </ul>
+      <a class="news" href="https://github.com/SSM-AUDIO/SSM-AUDIO.github.io/releases/tag/bl3-v0.1.0"><span data-lang="en">What's new in 0.1.0</span><span data-lang="ru">Что нового в 0.1.0</span></a>
+      <div class="dl" id="get">
+        <a href="https://github.com/SSM-AUDIO/SSM-AUDIO.github.io/releases/download/bl3-v0.1.0/BestLimiter3-0.1.0-Setup.exe"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14"/></svg></span><span data-lang="en">Download for Windows</span><span data-lang="ru">Скачать для Windows</span></a>
+        <a href="https://github.com/SSM-AUDIO/SSM-AUDIO.github.io/releases/download/bl3-v0.1.0/BestLimiter3-0.1.0-macOS.pkg"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14"/></svg></span><span data-lang="en">Download for Mac</span><span data-lang="ru">Скачать для Mac</span></a>
+      </div>
+      <p class="note"><span data-lang="en">VST3 · Windows 10/11 x64 with AVX2 · macOS 10.15+ on Intel and Apple Silicon</span><span data-lang="ru">VST3 · Windows 10/11 x64 с AVX2 · macOS 10.15+ на Intel и Apple Silicon</span></p>
+      <p><a href="install-macos.html"><span data-lang="en">macOS installation</span><span data-lang="ru">Установка на macOS</span></a></p>
+    </div>
+    <div class="shot"><img src="../images/best-limiter-3.png" alt="Best Limiter 3" width="1280" height="704"></div>
   </div>
-  <p>VST3 · 0.1.0</p>
-  <nav aria-label="Help and purchase">
-    <a href="manual-en.html">User guide</a>
-    <a href="manual-ru.html" lang="ru">Руководство</a>
-    <a href="install-macos.html">macOS installation</a>
-    <a href="payment.html">Unlock Saturator · 500 ₽</a>
-  </nav>
 </main>
+<script>
+(function () {
+  // the language: the same choice as on the SSM-Audio main page (one browser storage for the whole site); old links #russian / #english still work
+  var lang = (location.hash === '#russian') ? 'ru' : (location.hash === '#english') ? 'en' : null;
+  if (!lang) { try { lang = localStorage.getItem('ssm-lang'); } catch (e) {} }
+  if (lang !== 'ru' && lang !== 'en') lang = ((navigator.language || 'en').slice(0, 2) === 'ru') ? 'ru' : 'en';
+  function show() {
+    document.body.className = lang === 'ru' ? 'ru' : '';
+    document.documentElement.lang = lang;
+    ['en', 'ru'].forEach(function (code) {
+      var button = document.getElementById('b-' + code);
+      button.className = lang === code ? 'on' : '';
+      button.setAttribute('aria-pressed', String(lang === code));
+    });
+  }
+  function pick(l) { lang = l; try { localStorage.setItem('ssm-lang', l); } catch (e) {} show(); }
+  document.getElementById('b-en').onclick = function () { pick('en'); };
+  document.getElementById('b-ru').onclick = function () { pick('ru'); };
+  show();
+})();
+</script>
+
 </body>
 </html>
