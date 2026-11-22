@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "url": "https://ssm-audio.github.io/Best-Limiter-3/download.html",
-  "notes": "Free e-mail activation for clipper and limiter. Optional Saturator key: 500 RUB."
+  "notes": "Windows compatibility: no AVX2 requirement or separate Visual C++ runtime. Price removed from the plugin."
 }
